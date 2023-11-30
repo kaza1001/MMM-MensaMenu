@@ -1,8 +1,6 @@
 Module.register("MMM-MensaMenu", {
   // Default module config.
-  defaults: {
-    text: "MMM-MensaMenu!",
-  },
+  defaults: {},
 
   // Override start method.
   start: function () {
