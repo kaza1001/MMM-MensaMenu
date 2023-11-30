@@ -1,6 +1,8 @@
 Module.register("MMM-MensaMenu", {
   // Default module config.
-  defaults: {},
+  defaults: {
+    text: "",
+  },
 
   // Override start method.
   start: function () {
@@ -69,6 +71,7 @@ Module.register("MMM-MensaMenu", {
 
     wrapper.appendChild(table);
 
+    // Update the module's text configuration.
     this.config.text = wrapper.innerHTML;
     this.updateDom();
   },
