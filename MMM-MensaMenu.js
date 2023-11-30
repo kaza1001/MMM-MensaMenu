@@ -71,7 +71,6 @@ Module.register("MMM-MensaMenu", {
 
     wrapper.appendChild(table);
 
-    // Update the module's text configuration.
     this.config.text = wrapper.innerHTML;
     this.updateDom();
   },
