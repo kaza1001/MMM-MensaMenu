@@ -1,15 +1,19 @@
+
+let essen = "<p>Donerstag</p> <p>Essen1</p>"
+
+
+
 Module.register("MMM-MensaMenu", {
-    // Default module config.
-    defaults: {
-      text: abc,
-    },
-  
-    // Override dom generator.
+
+
     getDom: function () {
       var wrapper = document.createElement("div");
-      wrapper.innerHTML = this.config.text;
+      wrapper.innerHTML = essen;
       return wrapper;
     },
+    getHeader: function(){
+      return "Heutiger Spieseplan"
+    }
+
   });
 
-  const abc = "<p>Hallo</p><p>Ciao</p>"
