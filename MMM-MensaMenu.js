@@ -22,18 +22,23 @@ axios.get(url)
     const Food2Friday = rows.eq(14).text().trim();
 
     if (currentdate === 1) {
-      foodOfTheDay = "<h4>Montag</h4>" + "<p>" + Food1Monday + "</p>" + "<p>" + Food2Monday + "</p>";
+      let mondayFood = "<h4>Montag</h4>" + "<p>" + Food1Monday + "</p>" + "<p>" + Food2Monday + "</p>";
+      foodOfTheDay = mondayFood;
       console.log(`Montag:\n${Food1Monday}\n${Food2Monday}`);
     } else if (currentdate === 2) {
-      foodOfTheDay = "<h4>Montag</h4>" + "<p>" + Food1Tuesday + "</p>" + "<p>" + FoodTuesday + "</p>";
+      foodOfTheDay = "<h4>Dienstag</h4>" + "<p>" + Food1Tuesday + "</p>" + "<p>" + Food2Tuesday + "</p>";
     } else if (currentdate === 3) {
+      foodOfTheDay = "<h4>Mittwoch</h4>" + "<p>" + Food1Wednesday + "</p>" + "<p>" + Food2Wednesday + "</p>";
       console.log(`Mittwoch:\n${Food1Wednesday}\n${Food2Wednesday}`);
     } else if (currentdate === 4) {
-      foodOfTheDay = "<h4>Donnerstag</h4>" + "<p>" + Food1Thursday + "</p>" + "<p>" + Food2Thursday + "</p>";
+      let thursdayFood = "<h4>Donnerstag</h4>" + "<p>" + Food1Thursday + "</p>" + "<p>" + Food2Thursday + "</p>";
+      foodOfTheDay = thursdayFood;
       console.log(`Donnerstag:\n${Food1Thursday}\n${Food2Thursday}`);
     } else if (currentdate === 5) {
+      foodOfTheDay = "<h4>Freitag</h4>" + "<p>" + Food1Friday + "</p>" + "<p>" + Food2Friday + "</p>";
       console.log(`Freitag:\n${Food1Friday}\n${Food2Friday}`);
     } else {
+      foodOfTheDay= "Am Wochenende hat die Mensa leider geschlossen! ;)";
       console.log('Am Wochenende hat die Mensa leider geschlossen! ;)');
     }
   })
