@@ -1,46 +1,80 @@
-const axios = require('axios');
-const cheerio = require('cheerio');
-let foodOfTheDay = "";
+Module.register("MMM-MensaMenu", {
+    defaults: {
+        updateInterval: 60 * 60 * 1000, // Alle Stunde aktualisieren
+        url: "https://www.mensaplan.de/zweibruecken/mensa-zweibruecken/index.html",
+    },
 
-const currentdate = new Date().getDay();  // 0 is Sunday, 1 is Monday, ..., 6 is Saturday
-const url = 'https://www.mensaplan.de/zweibruecken/mensa-zweibruecken/index.html';
+    start: function () {
+        this.scheduleUpdate();
+    },
 
-axios.get(url)
-  .then((response) => {
-    const $ = cheerio.load(response.data);
-    const rows = $('.aw-weekly-menu.aw-group-5 p');
+    scheduleUpdate: function () {
+        setInterval(() => {
+            this.getData();
+        }, this.config.updateInterval);
+        this.getData();
+    },
 
-    const Food1Monday = rows.eq(5).text().trim();
-    const Food2Monday = rows.eq(10).text().trim();
-    const Food1Tuesday = rows.eq(6).text().trim();
-    const Food2Tuesday = rows.eq(11).text().trim();
-    const Food1Wednesday = rows.eq(7).text().trim();
-    const Food2Wednesday = rows.eq(12).text().trim();
-    const Food1Thursday = rows.eq(8).text().trim();
-    const Food2Thursday = rows.eq(13).text().trim();
-    const Food1Friday = rows.eq(9).text().trim();
-    const Food2Friday = rows.eq(14).text().trim();
+    getData: function () {
+        const self = this;
+        const url = this.config.url;
+        fetch(url)
+            .then(response => response.text())
+            .then(html => {
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, "text/html");
+                const table = doc.querySelector(".aw-weekly-menu.aw-group-5");
+                const rows = table.querySelectorAll("p");
 
-    if (currentdate === 1) {
-      foodOfTheDay = "<h4>Montag</h4>" + "<p>" + Food1Monday + "</p>" + "<p>" + Food2Monday + "</p>";
-      console.log(`Montag:\n${Food1Monday}\n${Food2Monday}`);
-    } else if (currentdate === 2) {
-      foodOfTheDay = "<h4>Dienstag</h4>" + "<p>" + Food1Tuesday + "</p>" + "<p>" + Food2Tuesday + "</p>";
-    } else if (currentdate === 3) {
-      foodOfTheDay = "<h4>Mittwoch</h4>" + "<p>" + Food1Wednesday + "</p>" + "<p>" + Food2Wednesday + "</p>";
-      console.log(`Mittwoch:\n${Food1Wednesday}\n${Food2Wednesday}`);
-    } else if (currentdate === 4) {
-      foodOfTheDay = "<h4>Donnerstag</h4>" + "<p>" + Food1Thursday + "</p>" + "<p>" + Food2Thursday + "</p>";
-      console.log(`Donnerstag:\n${Food1Thursday}\n${Food2Thursday}`);
-    } else if (currentdate === 5) {
-      foodOfTheDay = "<h4>Freitag</h4>" + "<p>" + Food1Friday + "</p>" + "<p>" + Food2Friday + "</p>";
-      console.log(`Freitag:\n${Food1Friday}\n${Food2Friday}`);
-    } else {
-      foodOfTheDay= "Am Wochenende hat die Mensa leider geschlossen! ;)";
-      console.log('Am Wochenende hat die Mensa leider geschlossen! ;)');
+                self.food1Monday = " ".join(rows[5].textContent.split());
+                self.food2Monday = " ".join(rows[10].textContent.split());
+                self.food1Tuesday = " ".join(rows[6].textContent.split());
+                self.food2Tuesday = " ".join(rows[11].textContent.split());
+                self.food1Wednesday = " ".join(rows[7].textContent.split());
+                self.food2Wednesday = " ".join(rows[12].textContent.split());
+                self.food1Thursday = " ".join(rows[8].textContent.split());
+                self.food2Thursday = " ".join(rows[13].textContent.split());
+                self.food1Friday = " ".join(rows[9].textContent.split());
+                self.food2Friday = " ".join(rows[14].textContent.split());
+
+                self.updateDom();
+            })
+            .catch(error => {
+                Log.error(`MMM-MensaMenu: Fehler beim Abrufen der Daten: ${error}`);
+            });
+    },
+
+    getDom: function () {
+        const wrapper = document.createElement("div");
+
+        if (currentdate === 0) {
+            this.addFoodToDom(wrapper, this.food1Monday, this.food2Monday, "Montag");
+        } else if (currentdate === 1) {
+            this.addFoodToDom(wrapper, this.food1Tuesday, this.food2Tuesday, "Dienstag");
+        } else if (currentdate === 2) {
+            this.addFoodToDom(wrapper, this.food1Wednesday, this.food2Wednesday, "Mittwoch");
+        } else if (currentdate === 3) {
+            this.addFoodToDom(wrapper, this.food1Thursday, this.food2Thursday, "Donnerstag");
+        } else if (currentdate === 4) {
+            this.addFoodToDom(wrapper, this.food1Friday, this.food2Friday, "Freitag");
+        } else {
+            wrapper.innerHTML = "Am Wochenende hat die Mensa leider geschlossen! ;)";
+        }
+
+        return wrapper;
+    },
+
+    addFoodToDom: function (wrapper, food1, food2, day) {
+        const header = document.createElement("h2");
+        header.innerText = day;
+        wrapper.appendChild(header);
+
+        const food1Element = document.createElement("p");
+        food1Element.innerText = `Food 1: ${food1}`;
+        wrapper.appendChild(food1Element);
+
+        const food2Element = document.createElement("p");
+        food2Element.innerText = `Food 2: ${food2}`;
+        wrapper.appendChild(food2Element);
     }
-  })
-  .catch((error) => {
-    console.error(`Error fetching data: ${error.message}`);
-  });
-
+});
