@@ -1,46 +1,37 @@
+/* MMM-MensaMenu.js */
 Module.register("MMM-MensaMenu", {
-    defaults: {
-        url: "https://www.mensaplan.de/zweibruecken/mensa-zweibruecken/index.html"
-    },
+  defaults: {
+    updateInterval: 60 * 60 * 1000, // 1 hour
+  },
 
-    start: function() {
-        this.menu = null;
-        this.sendSocketNotification("GET_MENU", this.config.url);
-    },
+  start: function () {
+    this.food = "";
+    this.getFood();
+    var self = this;
+    setInterval(function () {
+      self.getFood();
+    }, this.config.updateInterval);
+  },
 
-    socketNotificationReceived: function(notification, payload) {
-        if (notification === "MENU_RESULT") {
-            this.menu = payload;
-            this.updateDom();
-        }
-    },
+  getStyles: function () {
+    return ["MMM-MensaMenu.css"];
+  },
 
-    getDom: function() {
-        var wrapper = document.createElement("div");
-        if (this.menu) {
-            var table = document.createElement("table");
-            var header = document.createElement("header");
-            header.innerHTML = "Mensaspeiseplan";
-            wrapper.appendChild(header);
+  getDom: function () {
+    var wrapper = document.createElement("div");
+    wrapper.className = "mense-menu";
+    wrapper.innerHTML = this.food;
+    return wrapper;
+  },
 
-            var today = new Date().getDay();
-            if (today === 6) { // Samstag
-                wrapper.innerHTML = "Die Mensa ist am Samstag geschlossen.";
-                return wrapper;
-            }
+  getFood: function () {
+    this.sendSocketNotification("GET_FOOD");
+  },
 
-            if (this.menu.closed) {
-                wrapper.innerHTML = "Die Mensa ist geschlossen.";
-                return wrapper;
-            }
-
-            // Hier die Tabelle mit dem Menü aufbauen
-            // ...
-
-            wrapper.appendChild(table);
-        } else {
-            wrapper.innerHTML = "Lade Menü...";
-        }
-        return wrapper;
+  socketNotificationReceived: function (notification, payload) {
+    if (notification === "FOOD_RESULT") {
+      this.food = payload;
+      this.updateDom();
     }
+  },
 });
