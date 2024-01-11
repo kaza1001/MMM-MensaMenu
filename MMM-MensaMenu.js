@@ -1,15 +1,14 @@
-/* MMM-MensaMenu.js */
 Module.register("MMM-MensaMenu", {
   defaults: {
-    updateInterval: 60 * 60 * 1000, // 1 hour
+    updateInterval: 10 * 60 * 1000, // 10 minutes
   },
 
   start: function () {
-    this.food = "";
-    this.getFood();
+    this.food = {};
+    this.getMenu();
     var self = this;
     setInterval(function () {
-      self.getFood();
+      self.getMenu();
     }, this.config.updateInterval);
   },
 
@@ -19,17 +18,24 @@ Module.register("MMM-MensaMenu", {
 
   getDom: function () {
     var wrapper = document.createElement("div");
-    wrapper.className = "mense-menu";
-    wrapper.innerHTML = this.food;
+    if (!this.food.Monday) {
+      wrapper.innerHTML = "Loading menu...";
+      wrapper.className = "dimmed light small";
+      return wrapper;
+    }
+
+    // Display the menu in the wrapper
+    // You can modify this part to format the menu as you like
+
     return wrapper;
   },
 
-  getFood: function () {
-    this.sendSocketNotification("GET_FOOD");
+  getMenu: function () {
+    this.sendSocketNotification("GET_MENU");
   },
 
   socketNotificationReceived: function (notification, payload) {
-    if (notification === "FOOD_RESULT") {
+    if (notification === "MENU_RESULT") {
       this.food = payload;
       this.updateDom();
     }

@@ -1,19 +1,22 @@
 const NodeHelper = require("node_helper");
-const fetch = require('node-fetch');
-const cheerio = require('cheerio');
+const fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fetch(...args));
+const cheerio = require("cheerio");
 
 module.exports = NodeHelper.create({
   start: function () {
     console.log("Starting node helper for MMM-MensaMenu");
   },
+
   socketNotificationReceived: function (notification, payload) {
-    if (notification === "GET_FOOD") {
-      this.getFood();
+    if (notification === "GET_MENU") {
+      this.getMenu();
     }
   },
-  getFood: function () {
-    const self = this;
+
+  getMenu: function () {
+    var self = this;
     const url = 'https://www.mensaplan.de/zweibruecken/mensa-zweibruecken/index.html';
+
     fetch(url)
       .then(response => response.text())
       .then(data => {
@@ -28,33 +31,8 @@ module.exports = NodeHelper.create({
           Friday: `${$(rows[9]).text().trim()} ${$(rows[14]).text().trim()}`
         };
 
-        const currentdate = new Date().getDay() - 1; // 0 for Sunday, 1 for Monday, etc.
-        let currentFood = '';
-
-        switch (currentdate) {
-          case 0:
-            currentFood = `Montag:\n${food.Monday}`;
-            break;
-          case 1:
-            currentFood = `Dienstag:\n${food.Tuesday}`;
-            break;
-          case 2:
-            currentFood = `Mittwoch:\n${food.Wednesday}`;
-            break;
-          case 3:
-            currentFood = `Donnerstag:\n${food.Thursday}`;
-            break;
-          case 4:
-            currentFood = `Freitag:\n${food.Friday}`;
-            break;
-          default:
-            currentFood = 'Am Wochenende hat die Mensa leider geschlossen! ;)';
-        }
-
-        self.sendSocketNotification("FOOD_RESULT", currentFood);
+        self.sendSocketNotification("MENU_RESULT", food);
       })
-      .catch(function (error) {
-        console.error("Error fetching food: " + error.message);
-      });
-  }
+      .catch(error => console.error('Error:', error));
+  },
 });
