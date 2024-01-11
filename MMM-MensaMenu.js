@@ -26,8 +26,8 @@ Module.register("MMM-MensaMenu", {
     }
 
     var days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
-    var menuRow = wrapper.insertRow();
     var daysRow = wrapper.insertRow();
+    var menuRow = wrapper.insertRow();
 
     days.forEach(day => {
       var cell = daysRow.insertCell();
