@@ -24,8 +24,14 @@ Module.register("MMM-MensaMenu", {
       return wrapper;
     }
 
-    // Display the menu in the wrapper
-    // You can modify this part to format the menu as you like
+    var today = new Date().getDay() - 1; // 0 for Sunday, 1 for Monday, etc.
+    var days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
+    var day = days[today];
+    if (day) {
+      wrapper.innerHTML = `<strong>${day}:</strong><br>${this.food[day]}`;
+    } else {
+      wrapper.innerHTML = 'Am Wochenende hat die Mensa leider geschlossen! ;)';
+    }
 
     return wrapper;
   },
