@@ -1,0 +1,19 @@
+.MMM-MensaMenu {
+    width: 70%; /* Set the module width to 70% */
+    float: left; /* Align the module to the left */
+  }
+  
+  .MMM-MensaMenu table {
+    width: 100%; /* Set the table width to 100% */
+    border-collapse: collapse;
+  }
+  
+  .MMM-MensaMenu table th {
+    font-weight: bold; /* Apply bold font to the first row */
+    font-size: 1.2em; /* Increase the font size */
+  }
+  
+  .MMM-MensaMenu table td {
+    font-size: 1.1em; /* Increase the font size for the menu items */
+  }
+  
