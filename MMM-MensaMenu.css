@@ -1,28 +1,33 @@
 /* MMM-MensaMenu.css */
 
-.MMM-MensaMenu {
+.menu-wrapper {
     width: 70%; /* Set the module width to 70% */
     float: left; /* Align the module to the left */
   }
   
-  .MMM-MensaMenu table {
+  .menu-title {
+    font-size: 1.5em; /* Increase the font size for the title */
+    margin-bottom: 10px; /* Add margin at the bottom of the title */
+  }
+  
+  .menu-table {
     width: 100%; /* Set the table width to 100% */
     border-collapse: collapse;
     border: 2px solid #4285f4; /* Add a border to the table */
   }
   
-  .MMM-MensaMenu th, .MMM-MensaMenu td {
+  .menu-table th, .menu-table td {
     border: 1px solid #4285f4; /* Add borders to the table cells */
     padding: 8px; /* Add padding to the table cells */
     text-align: left; /* Align text to the left */
   }
   
-  .MMM-MensaMenu th {
+  .menu-table th {
     background-color: #f1f8ff; /* Add a background color to the header cells */
     font-size: 1.2em; /* Increase the font size for the header cells */
   }
   
-  .MMM-MensaMenu td {
+  .menu-table td {
     font-size: 1.1em; /* Increase the font size for the menu items */
   }
   

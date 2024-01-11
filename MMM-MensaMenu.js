@@ -17,17 +17,26 @@ Module.register("MMM-MensaMenu", {
   },
 
   getDom: function () {
-    var wrapper = document.createElement("table");
-    wrapper.className = "menu-table";
+    var wrapper = document.createElement("div");
+    wrapper.className = "menu-wrapper";
+
+    var title = document.createElement("div");
+    title.innerHTML = "HSKL Zweibrücken Mensa-Speiseplan";
+    title.className = "menu-title";
+    wrapper.appendChild(title);
+
+    var table = document.createElement("table");
+    table.className = "menu-table";
     if (!this.food.Monday) {
-      wrapper.innerHTML = "Loading menu...";
-      wrapper.className = "dimmed light small";
+      table.innerHTML = "Loading menu...";
+      table.className = "dimmed light small";
+      wrapper.appendChild(table);
       return wrapper;
     }
 
     var days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
-    var daysRow = wrapper.insertRow();
-    var menuRow = wrapper.insertRow();
+    var daysRow = table.insertRow();
+    var menuRow = table.insertRow();
 
     days.forEach(day => {
       var cell = daysRow.insertCell();
@@ -37,6 +46,7 @@ Module.register("MMM-MensaMenu", {
       cell.innerHTML = this.food[day];
     });
 
+    wrapper.appendChild(table);
     return wrapper;
   },
 
@@ -51,4 +61,3 @@ Module.register("MMM-MensaMenu", {
     }
   },
 });
-
