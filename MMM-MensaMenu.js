@@ -18,32 +18,24 @@ Module.register("MMM-MensaMenu", {
 
   getDom: function () {
     var wrapper = document.createElement("table");
-    wrapper.className = "small";
+    wrapper.className = "menu-table";
+    if (!this.food.Monday) {
+      wrapper.innerHTML = "Loading menu...";
+      wrapper.className = "dimmed light small";
+      return wrapper;
+    }
 
-    var headerRow = document.createElement("tr");
     var days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
-    days.forEach(day => {
-      var headerCell = document.createElement("th");
-      headerCell.innerHTML = day;
-      headerRow.appendChild(headerCell);
-    });
-    wrapper.appendChild(headerRow);
+    var menuRow = wrapper.insertRow();
+    var daysRow = wrapper.insertRow();
 
-    var food1Row = document.createElement("tr");
     days.forEach(day => {
-      var food1Cell = document.createElement("td");
-      food1Cell.innerHTML = this.food[day] ? this.food[day].split(" ")[0] : "";
-      food1Row.appendChild(food1Cell);
-    });
-    wrapper.appendChild(food1Row);
+      var cell = daysRow.insertCell();
+      cell.innerHTML = day;
 
-    var food2Row = document.createElement("tr");
-    days.forEach(day => {
-      var food2Cell = document.createElement("td");
-      food2Cell.innerHTML = this.food[day] ? this.food[day].split(" ")[1] : "";
-      food2Row.appendChild(food2Cell);
+      cell = menuRow.insertCell();
+      cell.innerHTML = this.food[day];
     });
-    wrapper.appendChild(food2Row);
 
     return wrapper;
   },
@@ -59,3 +51,4 @@ Module.register("MMM-MensaMenu", {
     }
   },
 });
+
