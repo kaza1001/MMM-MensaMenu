@@ -17,43 +17,39 @@ Module.register("MMM-MensaMenu", {
   },
 
   getDom: function () {
-  var wrapper = document.createElement("div");
-  wrapper.className = "menu-wrapper";
+    var wrapper = document.createElement("div");
+    wrapper.className = "menu-wrapper";
 
-  var title = document.createElement("div");
-  title.innerHTML = "HSKL Zweibrücken Mensa-Speiseplan";
-  title.className = "menu-title";
-  wrapper.appendChild(title);
-
-  var table = document.createElement("table");
-  table.className = "menu-table";
-  if (!this.food.Monday) {
-    table.innerHTML = "Loading menu...";
-    table.className = "dimmed light small";
+    var table = document.createElement("table");
+    table.className = "menu-table";
     wrapper.appendChild(table);
-    return wrapper;
-  }
 
-  var days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
-
-  days.forEach(day => {
     var daysRow = table.insertRow();
-    var dayCell = daysRow.insertCell();
-    dayCell.innerHTML = day;
+    var mealsRow1 = table.insertRow();
+    var mealsRow2 = table.insertRow();
 
-    var firstMealRow = table.insertRow();
-    var firstMealCell = firstMealRow.insertCell();
-    firstMealCell.innerHTML = this.food[day][0]; // Erstes Essen
+    var days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
 
-    var secondMealRow = table.insertRow();
-    var secondMealCell = secondMealRow.insertCell();
-    secondMealCell.innerHTML = this.food[day][1]; // Zweites Essen
-  });
+    // Erste Zeile: Wochentage
+    days.forEach(day => {
+      var dayCell = daysRow.insertCell();
+      dayCell.innerHTML = day;
+    });
 
-  wrapper.appendChild(table);
-  return wrapper;
-},
+    // Zweite Zeile: Erstes Essen
+    days.forEach(day => {
+      var firstMealCell = mealsRow1.insertCell();
+      firstMealCell.innerHTML = this.food[day][0]; // Erstes Essen
+    });
 
+    // Dritte Zeile: Zweites Essen
+    days.forEach(day => {
+      var secondMealCell = mealsRow2.insertCell();
+      secondMealCell.innerHTML = this.food[day][1]; // Zweites Essen
+    });
+
+    return wrapper;
+  },
 
   getMenu: function () {
     this.sendSocketNotification("GET_MENU");
@@ -66,3 +62,4 @@ Module.register("MMM-MensaMenu", {
     }
   },
 });
+
