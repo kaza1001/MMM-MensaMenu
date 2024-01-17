@@ -33,7 +33,7 @@ Module.register("MMM-MensaMenu", {
     var mealsRow1 = table.insertRow();
     var mealsRow2 = table.insertRow();
 
-    var days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
+    var days = ["Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag"];
 
     // Erste Zeile: Wochentage
     days.forEach(day => {
