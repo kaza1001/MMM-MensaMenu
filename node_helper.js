@@ -25,11 +25,11 @@ module.exports = NodeHelper.create({
 
         // Erstellen Sie ein Objekt, das Arrays von Speisen für jeden Wochentag enthält
         const food = {
-          Monday: [$(rows[5]).text().trim(), $(rows[10]).text().trim()],
-          Tuesday: [$(rows[6]).text().trim(), $(rows[11]).text().trim()],
-          Wednesday: [$(rows[7]).text().trim(), $(rows[12]).text().trim()],
-          Thursday: [$(rows[8]).text().trim(), $(rows[13]).text().trim()],
-          Friday: [$(rows[9]).text().trim(), $(rows[14]).text().trim()]
+          Montag: [$(rows[5]).text().trim(), $(rows[10]).text().trim()],
+          Dienstag: [$(rows[6]).text().trim(), $(rows[11]).text().trim()],
+          Mittwoch: [$(rows[7]).text().trim(), $(rows[12]).text().trim()],
+          Donnerstag: [$(rows[8]).text().trim(), $(rows[13]).text().trim()],
+          Freitag: [$(rows[9]).text().trim(), $(rows[14]).text().trim()]
         };
 
         self.sendSocketNotification("MENU_RESULT", food);
