@@ -20,6 +20,11 @@ Module.register("MMM-MensaMenu", {
     var wrapper = document.createElement("div");
     wrapper.className = "menu-wrapper";
 
+    var title = document.createElement("div");
+    title.innerHTML = "HSKL Zweibrücken Mensa-Speiseplan";
+    title.className = "menu-title";
+    wrapper.appendChild(title);
+
     var table = document.createElement("table");
     table.className = "menu-table";
     wrapper.appendChild(table);
