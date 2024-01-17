@@ -24,11 +24,11 @@ module.exports = NodeHelper.create({
         const rows = $('table.aw-weekly-menu.aw-group-5 p');
 
         const food = {
-          Monday: `${$(rows[5]).text().trim()} ${$(rows[10]).text().trim()}`,
-          Tuesday: `${$(rows[6]).text().trim()} ${$(rows[11]).text().trim()}`,
-          Wednesday: `${$(rows[7]).text().trim()} ${$(rows[12]).text().trim()}`,
-          Thursday: `${$(rows[8]).text().trim()} ${$(rows[13]).text().trim()}`,
-          Friday: `${$(rows[9]).text().trim()} ${$(rows[14]).text().trim()}`
+          Monday: [$(rows[5]).text().trim(), $(rows[10]).text().trim()],
+          Tuesday: [$(rows[6]).text().trim(), $(rows[11]).text().trim()],
+          Wednesday: [$(rows[7]).text().trim(), $(rows[12]).text().trim()],
+          Thursday: [$(rows[8]).text().trim(), $(rows[13]).text().trim()],
+          Friday: [$(rows[9]).text().trim(), $(rows[14]).text().trim()]
         };
 
         self.sendSocketNotification("MENU_RESULT", food);
@@ -36,3 +36,4 @@ module.exports = NodeHelper.create({
       .catch(error => console.error('Error:', error));
   },
 });
+
