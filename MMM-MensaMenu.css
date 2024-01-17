@@ -16,11 +16,11 @@
   .menu-table {
     width: 100%; /* Set the table width to 100% */
     border-collapse: collapse;
-    border: 2px solid #4285f4; /* Add a border to the table */
+    border: 2px solid #007466; /* Add a border to the table */
   }
   
   .menu-table th, .menu-table td {
-    border: 1px solid #4285f4; /* Add borders to the table cells */
+    border: 1px solid #007466; /* Add borders to the table cells */
     padding: 8px; /* Add padding to the table cells */
     text-align: left; /* Align text to the left */
   }
