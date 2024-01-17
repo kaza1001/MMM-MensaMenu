@@ -23,6 +23,7 @@ module.exports = NodeHelper.create({
         const $ = cheerio.load(data);
         const rows = $('table.aw-weekly-menu.aw-group-5 p');
 
+        // Erstellen Sie ein Objekt, das Arrays von Speisen für jeden Wochentag enthält
         const food = {
           Monday: [$(rows[5]).text().trim(), $(rows[10]).text().trim()],
           Tuesday: [$(rows[6]).text().trim(), $(rows[11]).text().trim()],
