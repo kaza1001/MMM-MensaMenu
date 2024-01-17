@@ -35,15 +35,16 @@ Module.register("MMM-MensaMenu", {
     }
 
     var days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
-    var daysRow = table.insertRow();
-    var menuRow = table.insertRow();
-
     days.forEach(day => {
-      var cell = daysRow.insertCell();
+      var dayRow = table.insertRow();
+      var cell = dayRow.insertCell();
       cell.innerHTML = day;
 
-      cell = menuRow.insertCell();
-      cell.innerHTML = this.food[day];
+      this.food[day].forEach(meal => {
+        var mealRow = table.insertRow();
+        cell = mealRow.insertCell();
+        cell.innerHTML = meal;
+      });
     });
 
     wrapper.appendChild(table);
