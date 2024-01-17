@@ -3,6 +3,7 @@
 .menu-wrapper {
     width: 70%; /* Set the module width to 70% */
     float: left; /* Align the module to the left */
+    margin-top: 10px;
   }
   
   .menu-title {
