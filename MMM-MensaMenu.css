@@ -6,9 +6,10 @@
 //  display: flex; /* Use flexbox for the layout */
 //  flex-direction: column; /* Set the flex direction to column for vertical stacking */
 //  margin-right: 0; /* Set the right margin to 0 to align the module to the left */
-    position: absolute;
-  top: 30px;
-  left: 50px;
+    position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
   }
   
   .menu-title {
