@@ -32,6 +32,14 @@ module.exports = NodeHelper.create({
           Freitag: [$(rows[9]).text().trim(), $(rows[14]).text().trim()]
         };
 
+        for (const day in food) {
+          food[day].forEach((element, index) => {
+            if (!element || element.length === 0) {
+              food[day][index] = "---";
+            }
+          });
+        }
+
         self.sendSocketNotification("MENU_RESULT", food);
       })
       .catch(error => console.error('Error:', error));
